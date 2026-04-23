@@ -24,14 +24,14 @@ export function FilterBar() {
             </div>
           </div>
           <div className="bg-blue-50 px-3 py-1.5 rounded-md">
-            <span className="text-sm text-orange-600 font-medium">2 active policies require attention</span>
+            <span className="text-sm text-orange-600 font-medium animate-pulse">2 active pulse require attention</span>
           </div>
         </div>
 
         {/* Bottom Section - Filter Buttons */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-          <select className="cursor-pointer bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:bg-gray-200 transition-colors">
+          <select className="cursor-pointer bg-gray-100 border border-gray-300 rounded-lg pl-4 pr-8 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:bg-gray-200 transition-colors mr-4">
             <option>Time Range</option>
             <option>Last 24h</option>
             <option>Last 7 days</option>

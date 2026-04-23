@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { MessageSquare, TrendingUp, Radio, BarChart3, MessageCircle, Menu } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { MessageSquare, TrendingUp, Radio, BarChart3, MessageCircle, Menu, Building2, MapPin, Tag } from 'lucide-react';
+import { useNavigate } from 'react-router';
 import { CrisisCard } from './CrisisCard';
 import { MetricWidget } from './MetricWidget';
 import { FilterBar } from './FilterBar';
@@ -10,6 +11,7 @@ import { CrisesManagementTab } from './ResponseTab';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('overview');
 
   const mentionsTrendData = [
@@ -45,13 +47,16 @@ export default function Dashboard() {
             <div className="flex items-center gap-10">
               <img className="h-10 w-auto" src="https://www.kaiku.fi/hubfs/Dev%20assets/Layer%201.svg" height="153" width="200" alt=""></img>
               <div>
-                <h1 className="text-3xl font-bold">Media Intelligence Dashboard</h1>
-                <p className="text-blue-200 mt-1">Monitor media coverage, detect risks, and manage communication response in real time</p>
+                <h1 className="text-3xl font-bold">PulseIQ</h1>
+                <p className="text-blue-200 mt-1">From Signals to Decisions — Instantly</p>
               </div>
             </div>
-            <button className="lg:hidden">
-              <Menu className="w-6 h-6" />
-            </button>
+              <button
+                onClick={() => navigate('/works')}
+                className="text-blue-200 cursor-pointer hover:text-white transition-colors underline underline-offset-4"
+              >
+                How it works?
+              </button>
           </div>
         </div>
       </header>
@@ -83,11 +88,6 @@ export default function Dashboard() {
         {activeTab === 'overview' && (
           <div className="space-y-8">
             <section>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-1 h-6 bg-red-500 rounded"></div>
-                <h2 className="text-2xl font-semibold text-gray-900">Critical Media Coverage</h2>
-              </div>
-
               <CrisisCard
                 severity="critical"
                 client="McDonald's Finland"
@@ -260,7 +260,7 @@ export default function Dashboard() {
         <div className="max-w-7xl mx-auto px-6 py-6">
           <div className="flex items-center">
             <p className="text-sm text-gray-600">
-              Powered by Scaletech Solutions
+              Powered by Scaletech
             </p>
           </div>
         </div>

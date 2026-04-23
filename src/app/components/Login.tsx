@@ -24,7 +24,7 @@ export function Login() {
               className="h-12 w-auto"
             />
           </div>
-          <h2 className="text-xl text-gray-700 mb-2">PulseIQ</h2>
+          <h2 className="text-[60px] text-gray-700 mb-2 pulse-animation">PulseIQ</h2>
           <p className="text-gray-600">
             From Signals to Decisions — Instantly
           </p>
@@ -66,7 +66,7 @@ export function Login() {
           
           <div className="text-center mt-6">
             <p className="text-sm text-gray-500">
-              Powered by Scaletech Solutions
+              Powered by Scaletech
             </p>
           </div>
         </div>

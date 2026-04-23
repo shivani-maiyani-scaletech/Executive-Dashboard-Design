@@ -5,6 +5,7 @@ import { OnboardClient } from "./components/OnboardClient";
 import { ConnectDataSource } from "./components/ConnectDataSource";
 import { ClientManagement } from "./components/ClientManagement";
 import Dashboard from "./components/Dashboard";
+import { HowItWorks } from "./components/HowItWorks";
 
 export const router = createBrowserRouter([
   {
@@ -34,5 +35,9 @@ export const router = createBrowserRouter([
   {
     path: "/client-management",
     element: <ClientManagement />,
+  },
+  {
+    path: "/works",
+    element: <HowItWorks />,
   },
 ]);

@@ -1,8 +1,18 @@
 import { AlertCircle, Clock, Filter, Plus } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export function LiveMonitoringTab() {
   const [showForm, setShowForm] = useState(false);
+  const [visibleAlerts, setVisibleAlerts] = useState<number[]>([2,3]); // Start with second alert (id: 2)
+
+  useEffect(() => {
+    // After 5 seconds, show first alert (id: 1) with animation
+    const timer = setTimeout(() => {
+      setVisibleAlerts(prev => [...prev, 1]);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const alerts = [
     {
@@ -120,10 +130,10 @@ export function LiveMonitoringTab() {
           </div>
         )}
           <div className="space-y-4">
-            {alerts.map((alert) => (
+            {alerts.filter(alert => visibleAlerts.includes(alert.id)).map((alert, index) => (
               <div
                 key={alert.id}
-                className={`border-l-4 ${severityColors[alert.severity as keyof typeof severityColors]} rounded-lg p-4`}
+                className={`border-l-4 ${severityColors[alert.severity as keyof typeof severityColors]} rounded-lg p-4 `}
               >
                 <div className="flex items-start gap-3 mb-3">
                   <span className="text-2xl">{severityIcons[alert.severity as keyof typeof severityIcons]}</span>

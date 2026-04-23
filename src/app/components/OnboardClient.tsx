@@ -2,6 +2,16 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { Activity, ArrowRight } from "lucide-react";
 
+interface ClientData {
+  clientName: string;
+  industry: string;
+  region: string;
+  keywords: string;
+  campaignKeywords: string;
+  highRiskTopics: string;
+  mediumRiskTopics: string;
+}
+
 export function OnboardClient() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -16,7 +26,23 @@ export function OnboardClient() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate("/connect-source");
+    
+    // Save client data to localStorage
+    const clientData: ClientData = {
+      clientName: formData.clientName,
+      industry: formData.industry,
+      region: formData.region,
+      keywords: formData.keywords,
+      campaignKeywords: formData.campaignKeywords,
+      highRiskTopics: formData.highRiskTopics,
+      mediumRiskTopics: formData.mediumRiskTopics,
+    };
+    
+    // Store in localStorage
+    localStorage.setItem('selectedClient', JSON.stringify(clientData));
+    
+    // Navigate to dashboard
+    navigate("/dashboard");
   };
 
   return (
