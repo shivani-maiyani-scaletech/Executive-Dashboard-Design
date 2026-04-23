@@ -124,7 +124,7 @@ export function OnboardClient() {
 
           <button
             type="submit"
-            className="w-full bg-[var(--kaiku-blue)] text-white py-3 rounded-lg hover:bg-[var(--kaiku-blue-dark)] transition-colors flex items-center justify-center gap-2"
+            className="w-full cursor-pointer bg-[var(--kaiku-blue)] text-white py-3 rounded-lg hover:bg-[var(--kaiku-blue-dark)] transition-colors flex items-center justify-center gap-2"
           >
             Next: Connect Data Source
             <ArrowRight className="w-5 h-5" />

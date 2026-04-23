@@ -67,7 +67,7 @@ export function ClientSelection() {
 
           <button
             onClick={() => navigate("/onboard")}
-            className="w-full mt-6 flex items-center justify-center gap-2 px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-[var(--kaiku-blue)] hover:bg-blue-50 transition-colors text-gray-700"
+            className="w-full cursor-pointer mt-6 flex items-center justify-center gap-2 px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-[var(--kaiku-blue)] hover:bg-blue-50 transition-colors text-gray-700"
           >
             <Plus className="w-5 h-5" />
             Add New Client
