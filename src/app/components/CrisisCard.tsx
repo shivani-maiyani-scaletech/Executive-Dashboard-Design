@@ -1,4 +1,4 @@
-import { AlertCircle, TrendingUp, Users, Clock } from 'lucide-react';
+import { AlertCircle, TrendingUp, Users, Clock, Hash, MessageCircle, Share2, Radio } from 'lucide-react';
 
 interface CrisisCardProps {
   severity: 'critical' | 'attention' | 'positive';
@@ -20,6 +20,9 @@ interface CrisisCardProps {
   recommendation: string;
   assignedTo?: string;
   status?: string;
+  hashtags: string[];
+  reshares?: number;
+  engagement?: string;
 }
 
 export function CrisisCard({
@@ -41,7 +44,10 @@ export function CrisisCard({
   trendLabel,
   recommendation,
   assignedTo,
-  status
+  status,
+  hashtags,
+  reshares,
+  engagement
 }: CrisisCardProps) {
   const severityColors = {
     critical: 'border-red-500 bg-red-50',
@@ -78,7 +84,77 @@ export function CrisisCard({
         </div>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 text-sm">
+<div>
+<div className="grid grid-cols-4 gap-4 mb-6">
+              <div>
+                <div className="text-xs text-gray-600 mb-1">Source</div>
+                <div className="text-sm font-medium">{source}</div>
+              </div>
+              <div>
+                <div className="text-xs text-gray-600 mb-1">Source Type</div>
+                <div className="text-sm font-medium">{sourceType}</div>
+              </div>
+              <div>
+                <div className="text-xs text-gray-600 mb-1">Published</div>
+                <div className="text-sm font-medium">{published}</div>
+              </div>
+              <div>
+                <div className="text-xs text-gray-600 mb-1">Sentiment</div>
+                <div className="text-sm font-medium text-red-600">{sentiment}</div>
+              </div>
+            </div>
+
+            <div className="mb-6">
+              <div className="text-xs text-gray-600 mb-2">Associated Hashtags</div>
+              <div className="flex flex-wrap gap-2">
+                {hashtags.map((tag, i) => (
+                  <span
+                    key={i}
+                    className="flex items-center gap-1 px-2 py-1 bg-gray-100 text-gray-700 text-sm rounded"
+                  >
+                    <Hash className="w-3 h-3" />
+                    {tag.replace("#", "")}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-gray-50 rounded-lg p-4 mb-6">
+              <h4 className="text-sm mb-3">Conversation Insights</h4>
+              <div className="grid grid-cols-4 gap-4">
+                <div>
+                  <div className="flex items-center gap-1 text-xs text-gray-600 mb-1">
+                    <MessageCircle className="w-3 h-3" />
+                    Mentions
+                  </div>
+                  <div className="text-lg">{mentions}</div>
+                </div>
+                <div>
+                  <div className="flex items-center gap-1 text-xs text-gray-600 mb-1">
+                    <Share2 className="w-3 h-3" />
+                    Reshares
+                  </div>
+                  <div className="text-lg">{reshares}</div>
+                </div>
+                <div>
+                  <div className="flex items-center gap-1 text-xs text-gray-600 mb-1">
+                    <Radio className="w-3 h-3" />
+                    Reach
+                  </div>
+                  <div className="text-lg">{reach}</div>
+                </div>
+                <div>
+                  <div className="flex items-center gap-1 text-xs text-gray-600 mb-1">
+                    <TrendingUp className="w-3 h-3" />
+                    Engagement
+                  </div>
+                  <div className="text-lg">{engagement}</div>
+                </div>
+              </div>
+            </div>
+
+</div>
+      {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 text-sm">
         <div>
           <p className="text-gray-600">Source</p>
           <p className="font-medium text-gray-900">{source}</p>
@@ -103,7 +179,7 @@ export function CrisisCard({
           <p className="text-gray-600">Mentions</p>
           <p className="font-medium text-gray-900">{mentions}</p>
         </div>
-      </div>
+      </div> */}
 
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
         <div className="flex items-start gap-2 mb-2">

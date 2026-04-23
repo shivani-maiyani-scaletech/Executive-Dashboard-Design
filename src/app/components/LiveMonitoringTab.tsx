@@ -1,6 +1,9 @@
-import { AlertCircle, Clock, Filter } from 'lucide-react';
+import { AlertCircle, Clock, Filter, Plus } from 'lucide-react';
+import { useState } from 'react';
 
 export function LiveMonitoringTab() {
+  const [showForm, setShowForm] = useState(false);
+
   const alerts = [
     {
       id: 1,
@@ -47,8 +50,75 @@ export function LiveMonitoringTab() {
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <div className="lg:col-span-2 space-y-4">
         <div className="bg-white rounded-lg border border-gray-200 p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Real-Time Alert Feed</h3>
-
+          <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-gray-900">Real-Time Alert Feed</h3>
+          <button
+          onClick={() => setShowForm(!showForm)}
+          className="flex cursor-pointer items-center gap-2 px-4 py-2 bg-[var(--kaiku-blue)] text-white rounded-lg hover:bg-[var(--kaiku-blue-dark)] transition-colors"
+        >
+          <Plus className="w-4 h-4" />
+          Add New Signal
+        </button>
+          </div>
+              {showForm && (
+          <div className="bg-white rounded-lg shadow border border-gray-200 p-6">
+            <h3 className="mb-4">Configure New Signal</h3>
+            <div className="space-y-4">
+              <div>
+                <label className="block mb-2 text-sm text-gray-700">Signal Name</label>
+                <input
+                  type="text"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--kaiku-blue)] bg-white"
+                  placeholder="e.g., Service Quality Alert"
+                />
+              </div>
+              <div>
+                <label className="block mb-2 text-sm text-gray-700">Keywords (comma-separated)</label>
+                <input
+                  type="text"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--kaiku-blue)] bg-white"
+                  placeholder="e.g., service, wait time, slow"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block mb-2 text-sm text-gray-700">Sentiment Threshold</label>
+                  <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--kaiku-blue)] bg-white">
+                    <option>Any</option>
+                    <option>Negative Only</option>
+                    <option>Positive Only</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block mb-2 text-sm text-gray-700">Reach Threshold</label>
+                  <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--kaiku-blue)] bg-white">
+                    <option>Any</option>
+                    <option>High</option>
+                    <option>Medium</option>
+                    <option>Low</option>
+                  </select>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <input type="checkbox" id="spike" className="rounded" />
+                <label htmlFor="spike" className="text-sm text-gray-700">
+                  Enable spike detection
+                </label>
+              </div>
+              <div className="flex gap-2">
+                <button className="px-4 cursor-pointer py-2 bg-[var(--kaiku-blue)] text-white rounded-lg hover:bg-[var(--kaiku-blue-dark)] transition-colors">
+                  Create Signal
+                </button>
+                <button
+                  onClick={() => setShowForm(false)}
+                  className="px-4 cursor-pointer py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
           <div className="space-y-4">
             {alerts.map((alert) => (
               <div
@@ -156,7 +226,7 @@ export function LiveMonitoringTab() {
               </select>
             </div>
 
-            <button className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors">
+            <button className="w-full  bg-[var(--kaiku-blue)] text-white py-2 px-4 rounded transition-colors">
               Apply Filters
             </button>
           </div>
