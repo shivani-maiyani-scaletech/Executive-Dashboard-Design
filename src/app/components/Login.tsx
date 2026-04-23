@@ -58,7 +58,7 @@ export function Login() {
 
             <button
               type="submit"
-              className="w-full bg-[var(--kaiku-blue)] text-white py-3 rounded-lg hover:bg-[var(--kaiku-blue-dark)] transition-colors"
+              className="w-full cursor-pointer bg-[var(--kaiku-blue)] text-white py-3 rounded-lg hover:bg-[var(--kaiku-blue-dark)] transition-colors"
             >
               Login
             </button>
