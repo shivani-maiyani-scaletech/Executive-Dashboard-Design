@@ -110,6 +110,7 @@ export default function Dashboard() {
                 status="In Progress"
                 engagement="1.2K"
                 hashtags={["#cleanliness", "#foodsafety", "#brandreputation"]}
+                worldCloud={["cleanliness", "hygiene", "dirty", "food safety", "inspection", "violation", "complaint", "sanitation", "customer experience", "restaurant", "McDonalds", "Helsinki"]}
               />
 
               <CrisisCard
@@ -132,6 +133,7 @@ export default function Dashboard() {
                 recommendation="Monitor media coverage. No immediate escalation required."
                 hashtags={["#service", "#customerexperience"]}
                 engagement="0.8K"
+                worldCloud={["slow service", "waiting time", "queue", "delay", "staff", "busy", "order", "customer experience", "service quality", "feedback", "complaint", "McDonalds"]}
               />
 
               <CrisisCard
@@ -153,6 +155,7 @@ export default function Dashboard() {
                 status="Active"
                 engagement="2.5K"
                 hashtags={["#sustainability", "#recycling", "#environment"]}
+                worldCloud={["sustainability", "eco friendly", "recycling", "green initiative", "packaging", "environmental", "campaign", "innovation", "brand image", "awareness", "positive", "McDonalds"]}
               />
             </section>
 
