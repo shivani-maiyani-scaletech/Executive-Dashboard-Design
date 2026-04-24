@@ -1,38 +1,6 @@
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
 
 export function TrendsTab() {
-  const [animationKey, setAnimationKey] = useState(0);
-  const [currentAnimatingWords, setCurrentAnimatingWords] = useState<number[]>([]);
-
-  useEffect(() => {
-    // Trigger animation every time component renders
-    setAnimationKey(prev => prev + 1);
-  }, []);
-
-  useEffect(() => {
-    // Animate words continuously every 1.5 seconds
-    const interval = setInterval(() => {
-      const totalWords = 32; // Total number of words in the array
-      const randomWordIndex = Math.floor(Math.random() * totalWords);
-      setCurrentAnimatingWords(prev => {
-        const newSet = [...prev];
-        if (!newSet.includes(randomWordIndex)) {
-          newSet.push(randomWordIndex);
-          // Remove word from animating set after animation completes
-          setTimeout(() => {
-            setCurrentAnimatingWords(current => current.filter(idx => idx !== randomWordIndex));
-          }, 800);
-        }
-        return newSet;
-      });
-    }, 1500);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  
   const mentionsData = [
     { time: '00:00', mentions: 2 },
     { time: '04:00', mentions: 3 },
@@ -49,6 +17,46 @@ export function TrendsTab() {
     { category: 'Service Quality', negative: 4, neutral: 8, positive: 2 },
     { category: 'Menu Items', negative: 1, neutral: 5, positive: 15 },
     { category: 'General', negative: 2, neutral: 12, positive: 8 }
+  ];
+
+  const wordCloudData = [
+    // Hygiene related words
+    { text: 'cleanliness', value: 70 },
+    { text: 'hygiene', value: 92 },
+    { text: 'dirty', value: 38 },
+    { text: 'food safety', value: 50 },
+    { text: 'inspection', value: 45 },
+    { text: 'violation', value: 32 },
+    { text: 'complaint', value: 20 },
+    { text: 'sanitation', value: 30 },
+    { text: 'customer experience', value: 30 },
+    { text: 'restaurant', value: 40 },
+    { text: 'McDonalds', value: 100 },
+    { text: 'Helsinki', value: 55 },
+    
+    // Slow Service related words
+    { text: 'slow service', value: 40 },
+    { text: 'waiting time', value: 35 },
+    { text: 'queue', value: 28 },
+    { text: 'delay', value: 36 },
+    { text: 'staff', value: 28 },
+    { text: 'busy', value: 30 },
+    { text: 'order', value: 32 },
+    { text: 'service quality', value: 44 },
+    { text: 'feedback', value: 30 },
+    
+    // Sustainability related words
+    { text: 'sustainability', value: 40 },
+    { text: 'eco friendly', value: 56 },
+    { text: 'recycling', value: 45 },
+    { text: 'green initiative', value: 40 },
+    { text: 'packaging', value: 50 },
+    { text: 'environment', value: 50 },
+    { text: 'campaign', value: 30 },
+    { text: 'innovation', value: 10 },
+    { text: 'brand image', value: 10 },
+    { text: 'awareness', value: 35 },
+    { text: 'positive', value: 30 }
   ];
 
   return (
@@ -89,69 +97,40 @@ export function TrendsTab() {
 
       <div className="bg-white rounded-lg border border-gray-200 p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Top Keywords</h3>
-        <div className="flex flex-wrap gap-3 justify-center items-center p-6 bg-gradient-to-br from-gray-50 to-blue-50 rounded-lg">
-          {[
-            { text: 'cleanliness', size: 28, color: 'text-red-600' },
-            { text: 'hygiene', size: 32, color: 'text-red-700' },
-            { text: 'dirty', size: 24, color: 'text-red-500' },
-            { text: 'food safety', size: 26, color: 'text-orange-600' },
-            { text: 'inspection', size: 20, color: 'text-orange-500' },
-            { text: 'violation', size: 22, color: 'text-red-600' },
-            { text: 'complaint', size: 25, color: 'text-red-500' },
-            { text: 'sanitation', size: 21, color: 'text-orange-600' },
-            { text: 'customer experience', size: 18, color: 'text-gray-600' },
-            { text: 'restaurant', size: 19, color: 'text-gray-500' },
-            { text: 'McDonalds', size: 30, color: 'text-blue-600' },
-            { text: 'Helsinki', size: 23, color: 'text-blue-500' },
-            { text: 'slow service', size: 27, color: 'text-yellow-600' },
-            { text: 'waiting time', size: 25, color: 'text-yellow-700' },
-            { text: 'queue', size: 22, color: 'text-yellow-600' },
-            { text: 'delay', size: 20, color: 'text-orange-500' },
-            { text: 'staff', size: 19, color: 'text-gray-600' },
-            { text: 'busy', size: 21, color: 'text-yellow-600' },
-            { text: 'order', size: 18, color: 'text-gray-500' },
-            { text: 'service quality', size: 24, color: 'text-yellow-700' },
-            { text: 'feedback', size: 20, color: 'text-gray-600' },
-            { text: 'sustainability', size: 29, color: 'text-green-600' },
-            { text: 'eco friendly', size: 26, color: 'text-green-700' },
-            { text: 'recycling', size: 23, color: 'text-green-500' },
-            { text: 'green initiative', size: 25, color: 'text-emerald-600' },
-            { text: 'packaging', size: 21, color: 'text-green-600' },
-            { text: 'environment', size: 24, color: 'text-emerald-700' },
-            { text: 'campaign', size: 22, color: 'text-blue-500' },
-            { text: 'innovation', size: 20, color: 'text-purple-600' },
-            { text: 'brand image', size: 23, color: 'text-blue-600' },
-            { text: 'awareness', size: 19, color: 'text-indigo-600' },
-            { text: 'positive', size: 26, color: 'text-green-600' }
-          ].map((word, index) => (
-            <motion.span
-              key={`${index}-${animationKey}`}
-              initial={{ opacity: 0, scale: 0.8, y: 20 }}
-              animate={{ 
-                opacity: currentAnimatingWords.includes(index) ? [1, 0.3, 1, 0.3, 1] : 1, 
-                scale: currentAnimatingWords.includes(index) ? [1, 1.3, 1, 1.3, 1] : 1,
-                y: 0 
-              }}
-              transition={{ 
-                duration: 0.6, 
-                delay: index * 0.1,
-                type: "spring",
-                stiffness: 100
-              }}
-              whileHover={{ 
-                scale: 1.2, 
-                rotate: [0, -5, 5, 0],
-                transition: { duration: 0.3 }
-              }}
-              className={`${word.color} font-medium cursor-default inline-block ${
-                currentAnimatingWords.includes(index) ? 'animate-pulse' : ''
-              }`}
-              style={{ fontSize: `${word.size}px` }}
-            >
-              {word.text}
-            </motion.span>
-          ))}
+        <div className="h-80 relative overflow-hidden">
+          <div className="absolute inset-0 flex flex-wrap items-center justify-center gap-2 p-4">
+            {wordCloudData.map((word, index) => {
+              const fontSize = Math.max(12, Math.min(60, word.value / 2));
+              const colors = ['#1F3A5F', '#22c55e', '#ef4444', '#3b82f6', '#8b5cf6', '#06b6d4'];
+              const color = colors[index % colors.length];
+              
+              return (
+                <span
+                  key={index}
+                  className="inline-block px-2 py-1 rounded-md transition-all duration-300 hover:scale-110 hover:shadow-md cursor-pointer"
+                  style={{
+                    fontSize: `${fontSize}px`,
+                    color: color,
+                    fontWeight: word.value > 80 ? '700' : word.value > 60 ? '600' : '500',
+                    opacity: 0.8 + (word.value / 500),
+                    transform: `rotate(${Math.random() * 10 - 5}deg)`,
+                    animation: `float ${3 + Math.random() * 2}s ease-in-out infinite`,
+                    animationDelay: `${Math.random() * 2}s`
+                  }}
+                  title={`${word.text}: ${word.value}% relevance`}
+                >
+                  {word.text}
+                </span>
+              );
+            })}
+          </div>
         </div>
+        <style>{`
+          @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(2deg); }
+          }
+        `}</style>
       </div>
 
       <div className="bg-white rounded-lg border border-gray-200 p-6">
