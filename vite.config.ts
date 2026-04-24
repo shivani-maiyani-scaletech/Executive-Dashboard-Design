@@ -12,6 +12,7 @@ function figmaAssetResolver() {
         const filename = id.replace('figma:asset/', '')
         return path.resolve(__dirname, 'src/assets', filename)
       }
+      return null
     },
   }
 }
@@ -33,4 +34,18 @@ export default defineConfig({
 
   // File types to support raw imports. Never add .css, .tsx, or .ts files to this.
   assetsInclude: ['**/*.svg', '**/*.csv'],
+
+  // Configure server to block crawlers with headers
+  server: {
+    headers: {
+      'X-Robots-Tag': 'noindex, nofollow, noarchive, nosnippet'
+    }
+  },
+
+  // Configure preview server for production builds
+  preview: {
+    headers: {
+      'X-Robots-Tag': 'noindex, nofollow, noarchive, nosnippet'
+    }
+  }
 })

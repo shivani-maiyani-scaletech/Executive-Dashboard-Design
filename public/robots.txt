@@ -1,0 +1,15 @@
+User-agent: *
+Disallow: /
+
+# Block all search engine crawlers from accessing any part of the site
+User-agent: Googlebot
+Disallow: /
+
+User-agent: Googlebot-Image
+Disallow: /
+
+User-agent: Googlebot-Video
+Disallow: /
+
+# Crawl delay (optional)
+Crawl-delay: 1
