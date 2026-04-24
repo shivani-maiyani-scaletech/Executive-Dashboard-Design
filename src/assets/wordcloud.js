@@ -36,18 +36,18 @@ export function createWordCloud(container, data) {
   series.dataFields.word = "tag";
   series.dataFields.value = "count";
 
-  // Set up multiple colors for words
+  // Set up multiple dark colors for words
   const colors = [
-    am4core.color("#FF6B6B"),
-    am4core.color("#4ECDC4"),
-    am4core.color("#45B7D1"),
-    am4core.color("#96CEB4"),
-    am4core.color("#FFEAA7"),
-    am4core.color("#DDA0DD"),
-    am4core.color("#98D8C8"),
-    am4core.color("#F7DC6F"),
-    am4core.color("#BB8FCE"),
-    am4core.color("#85C1E2")
+    am4core.color("#2C3E50"),
+    am4core.color("#34495E"),
+    am4core.color("#1A252F"),
+    am4core.color("#2F4F4F"),
+    am4core.color("#483D8B"),
+    am4core.color("#2F1B8D"),
+    am4core.color("#1E3A8A"),
+    am4core.color("#1E293B"),
+    am4core.color("#18181B"),
+    am4core.color("#27272A")
   ];
 
   // Apply colors to labels
