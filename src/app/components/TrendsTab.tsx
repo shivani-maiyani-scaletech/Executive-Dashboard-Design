@@ -88,7 +88,7 @@ export function TrendsTab() {
       </div>
 
       <div className="bg-white rounded-lg border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Trending Topics Word Cloud</h3>
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Top Keywords</h3>
         <div className="flex flex-wrap gap-3 justify-center items-center p-6 bg-gradient-to-br from-gray-50 to-blue-50 rounded-lg">
           {[
             { text: 'cleanliness', size: 28, color: 'text-red-600' },

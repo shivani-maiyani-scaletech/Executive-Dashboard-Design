@@ -1,4 +1,5 @@
-import { AlertCircle, TrendingUp, Users, Clock, Hash, MessageCircle, Share2, Radio } from 'lucide-react';
+import { AlertCircle, TrendingUp, Users, Clock, Hash, MessageCircle, Share2, Radio, ChevronDown, ChevronUp } from 'lucide-react';
+import { useState } from 'react';
 
 interface CrisisCardProps {
   severity: 'critical' | 'attention' | 'positive';
@@ -50,6 +51,7 @@ export function CrisisCard({
   reshares,
   engagement,
 }: CrisisCardProps) {
+  const [isCollapsed, setIsCollapsed] = useState(true);
   const severityColors = {
     critical: 'border-red-500 bg-red-50',
     attention: 'border-orange-500 bg-orange-50',
@@ -83,10 +85,21 @@ export function CrisisCard({
             <AlertCircle className="w-4 h-4 text-gray-600" />
           </div>
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-3">{title}</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">{title}</h3>
         </div>
+        <button
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          className="flex items-center cursor-pointer justify-center w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-200 transition-colors"
+        >
+          {isCollapsed ? (
+            <ChevronDown className="w-4 h-4 text-gray-600" />
+          ) : (
+            <ChevronUp className="w-4 h-4 text-gray-600" />
+          )}
+        </button>
       </div>
 
+{!isCollapsed && (
 <div>
 <div className="grid grid-cols-4 gap-4 mb-6">
               <div>
@@ -171,7 +184,10 @@ export function CrisisCard({
             </div>
 
 </div>
+)}
 
+{!isCollapsed && (
+<div>
    {(newsmentions !== undefined || socialMentions !== undefined || blogMentions !== undefined || trendStatus) && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           {(newsmentions !== undefined || socialMentions !== undefined || blogMentions !== undefined) && (
@@ -255,6 +271,8 @@ export function CrisisCard({
           )}
         </div>
       )}
+</div>
+)}
 
     </div>
   );

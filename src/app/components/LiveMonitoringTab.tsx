@@ -4,11 +4,13 @@ import { useState, useEffect } from 'react';
 export function LiveMonitoringTab() {
   const [showForm, setShowForm] = useState(false);
   const [visibleAlerts, setVisibleAlerts] = useState<number[]>([2,3]); // Start with second alert (id: 2)
+  const [isLoadingFirstAlert, setIsLoadingFirstAlert] = useState(true); // Track loading state
 
   useEffect(() => {
     // After 5 seconds, show first alert (id: 1) with animation
     const timer = setTimeout(() => {
       setVisibleAlerts(prev => [...prev, 1]);
+      setIsLoadingFirstAlert(false); // Stop loading
     }, 5000);
 
     return () => clearTimeout(timer);
@@ -130,6 +132,15 @@ export function LiveMonitoringTab() {
           </div>
         )}
           <div className="space-y-4">
+             {/* Text for new alert loading */}
+            {isLoadingFirstAlert && (
+              
+              <div className="border-l-4 border-blue-500 bg-blue-50 rounded-lg p-4 animate-pulse">
+              <div className="text-[var(--kaiku-blue)] text-xl font-semibold animate-pulse p-4 text-center">
+                New alert loading...
+              </div>
+              </div>
+            )}
             {alerts.filter(alert => visibleAlerts.includes(alert.id)).map((alert, index) => (
               <div
                 key={alert.id}
@@ -163,6 +174,8 @@ export function LiveMonitoringTab() {
                 </div>
               </div>
             ))}
+            
+           
           </div>
         </div>
 
