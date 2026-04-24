@@ -1,4 +1,5 @@
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { WordCloudChart } from './WordCloudChart';
 
 export function TrendsTab() {
   const mentionsData = [
@@ -97,40 +98,7 @@ export function TrendsTab() {
 
       <div className="bg-white rounded-lg border border-gray-200 p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Top Keywords</h3>
-        <div className="h-80 relative overflow-hidden">
-          <div className="absolute inset-0 flex flex-wrap items-center justify-center gap-2 p-4">
-            {wordCloudData.map((word, index) => {
-              const fontSize = Math.max(12, Math.min(60, word.value / 2));
-              const colors = ['#1F3A5F', '#22c55e', '#ef4444', '#3b82f6', '#8b5cf6', '#06b6d4'];
-              const color = colors[index % colors.length];
-              
-              return (
-                <span
-                  key={index}
-                  className="inline-block px-2 py-1 rounded-md transition-all duration-300 hover:scale-110 hover:shadow-md cursor-pointer"
-                  style={{
-                    fontSize: `${fontSize}px`,
-                    color: color,
-                    fontWeight: word.value > 80 ? '700' : word.value > 60 ? '600' : '500',
-                    opacity: 0.8 + (word.value / 500),
-                    transform: `rotate(${Math.random() * 10 - 5}deg)`,
-                    animation: `float ${3 + Math.random() * 2}s ease-in-out infinite`,
-                    animationDelay: `${Math.random() * 2}s`
-                  }}
-                  title={`${word.text}: ${word.value}% relevance`}
-                >
-                  {word.text}
-                </span>
-              );
-            })}
-          </div>
-        </div>
-        <style>{`
-          @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-5px) rotate(2deg); }
-          }
-        `}</style>
+        <WordCloudChart data={wordCloudData} />
       </div>
 
       <div className="bg-white rounded-lg border border-gray-200 p-6">
