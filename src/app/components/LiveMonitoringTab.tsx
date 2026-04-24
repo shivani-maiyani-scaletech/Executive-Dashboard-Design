@@ -1,19 +1,11 @@
 import { AlertCircle, Clock, Filter, Plus } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+
 
 export function LiveMonitoringTab() {
   const [showForm, setShowForm] = useState(false);
-  const [visibleAlerts, setVisibleAlerts] = useState<number[]>([2,3]); // Start with second alert (id: 2)
-  const [firstAlertVisible, setFirstAlertVisible] = useState(false); // Track first alert animation
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setVisibleAlerts(prev => [...prev, 1]);
-      setFirstAlertVisible(true); // Trigger animation
-    }, 600);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   const alerts = [
     {
@@ -45,6 +37,23 @@ export function LiveMonitoringTab() {
     }
   ];
 
+  const [alertsList, setAlertsList] = useState(alerts.slice(1)); // Start with alerts 2 and 3
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      // Prepend the critical alert smoothly
+      setAlertsList(prev => {
+        if (prev.some(a => a.id === 1)) return prev;
+        return [alerts[0], ...prev];
+      });
+    }, 600);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+
+
+
   const severityColors = {
     critical: 'border-red-500 bg-red-50',
     attention: 'border-orange-500 bg-orange-50',
@@ -62,115 +71,126 @@ export function LiveMonitoringTab() {
       <div className="lg:col-span-2 space-y-4">
         <div className="bg-white rounded-lg border border-gray-200 p-6">
           <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-gray-900">Real-Time Alert Feed</h3>
-          <button
-          onClick={() => setShowForm(!showForm)}
-          className="flex cursor-pointer items-center gap-2 px-4 py-2 bg-[var(--kaiku-blue)] text-white rounded-lg hover:bg-[var(--kaiku-blue-dark)] transition-colors"
-        >
-          <Plus className="w-4 h-4" />
-          Add New Signal
-        </button>
+            <h3 className="text-lg font-semibold text-gray-900">Real-Time Alert Feed</h3>
+            <button
+              onClick={() => setShowForm(!showForm)}
+              className="flex cursor-pointer items-center gap-2 px-4 py-2 bg-[var(--kaiku-blue)] text-white rounded-lg hover:bg-[var(--kaiku-blue-dark)] transition-colors"
+            >
+              <Plus className="w-4 h-4" />
+              Add New Signal
+            </button>
           </div>
-              {showForm && (
-          <div className="bg-white rounded-lg shadow border border-gray-200 p-6">
-            <h3 className="mb-4">Configure New Signal</h3>
-            <div className="space-y-4">
-              <div>
-                <label className="block mb-2 text-sm text-gray-700">Signal Name</label>
-                <input
-                  type="text"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--kaiku-blue)] bg-white"
-                  placeholder="e.g., Service Quality Alert"
-                />
-              </div>
-              <div>
-                <label className="block mb-2 text-sm text-gray-700">Keywords (comma-separated)</label>
-                <input
-                  type="text"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--kaiku-blue)] bg-white"
-                  placeholder="e.g., service, wait time, slow"
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-4">
+          {showForm && (
+            <div className="bg-white rounded-lg shadow border border-gray-200 p-6">
+              <h3 className="mb-4">Configure New Signal</h3>
+              <div className="space-y-4">
                 <div>
-                  <label className="block mb-2 text-sm text-gray-700">Sentiment Threshold</label>
-                  <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--kaiku-blue)] bg-white">
-                    <option>Any</option>
-                    <option>Negative Only</option>
-                    <option>Positive Only</option>
-                  </select>
+                  <label className="block mb-2 text-sm text-gray-700">Signal Name</label>
+                  <input
+                    type="text"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--kaiku-blue)] bg-white"
+                    placeholder="e.g., Service Quality Alert"
+                  />
                 </div>
                 <div>
-                  <label className="block mb-2 text-sm text-gray-700">Reach Threshold</label>
-                  <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--kaiku-blue)] bg-white">
-                    <option>Any</option>
-                    <option>High</option>
-                    <option>Medium</option>
-                    <option>Low</option>
-                  </select>
+                  <label className="block mb-2 text-sm text-gray-700">Keywords (comma-separated)</label>
+                  <input
+                    type="text"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--kaiku-blue)] bg-white"
+                    placeholder="e.g., service, wait time, slow"
+                  />
                 </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <input type="checkbox" id="spike" className="rounded" />
-                <label htmlFor="spike" className="text-sm text-gray-700">
-                  Enable spike detection
-                </label>
-              </div>
-              <div className="flex gap-2">
-                <button className="px-4 cursor-pointer py-2 bg-[var(--kaiku-blue)] text-white rounded-lg hover:bg-[var(--kaiku-blue-dark)] transition-colors">
-                  Create Signal
-                </button>
-                <button
-                  onClick={() => setShowForm(false)}
-                  className="px-4 cursor-pointer py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                >
-                  Cancel
-                </button>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block mb-2 text-sm text-gray-700">Sentiment Threshold</label>
+                    <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--kaiku-blue)] bg-white">
+                      <option>Any</option>
+                      <option>Negative Only</option>
+                      <option>Positive Only</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block mb-2 text-sm text-gray-700">Reach Threshold</label>
+                    <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--kaiku-blue)] bg-white">
+                      <option>Any</option>
+                      <option>High</option>
+                      <option>Medium</option>
+                      <option>Low</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <input type="checkbox" id="spike" className="rounded" />
+                  <label htmlFor="spike" className="text-sm text-gray-700">
+                    Enable spike detection
+                  </label>
+                </div>
+                <div className="flex gap-2">
+                  <button className="px-4 cursor-pointer py-2 bg-[var(--kaiku-blue)] text-white rounded-lg hover:bg-[var(--kaiku-blue-dark)] transition-colors">
+                    Create Signal
+                  </button>
+                  <button
+                    onClick={() => setShowForm(false)}
+                    className="px-4 cursor-pointer py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
           <div className="space-y-4">
-            {alerts.filter(alert => visibleAlerts.includes(alert.id)).map((alert, index) => (
-              <div
-                key={alert.id}
-                className={`border-l-4 ${severityColors[alert.severity as keyof typeof severityColors]} rounded-lg p-4 ${
-                  alert.id === 1 && firstAlertVisible 
-                    ? 'animate-slide-in-up' 
-                    : ''
-                }`}
-              >
-                <div className="flex items-start gap-3 mb-3">
-                  <span className="text-2xl">{severityIcons[alert.severity as keyof typeof severityIcons]}</span>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <AlertCircle className="w-4 h-4 text-gray-600" />
-                      <span className="font-semibold text-gray-900">{alert.title}</span>
+            <AnimatePresence initial={false}>
+              {alertsList.map((alert) => (
+                <motion.div
+                  key={alert.id}
+                  initial={{ opacity: 0, translateY: -20, height: 0 }}
+                  animate={{ opacity: 1, translateY: 0, height: 'auto' }}
+                  exit={{ opacity: 0, translateY: -20, height: 0 }}
+                  transition={{
+                    duration: 0.4,
+                    ease: "easeInOut",
+                    height: { duration: 0.4 },
+                    opacity: { duration: 0.3 }
+                  }}
+                  layout
+                  style={{ overflow: 'hidden' }}
+                >
+                  <div
+                    className={`border-l-4 ${severityColors[alert.severity as keyof typeof severityColors]} rounded-lg p-4 mb-4 last:mb-0`}
+                  >
+                    <div className="flex items-start gap-3 mb-3">
+                      <span className="text-2xl">{severityIcons[alert.severity as keyof typeof severityIcons]}</span>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <AlertCircle className="w-4 h-4 text-gray-600" />
+                          <span className="font-semibold text-gray-900">{alert.title}</span>
+                        </div>
+                        <div className="flex items-center gap-4 text-sm text-gray-600 mb-2">
+                          <span>Source: {alert.source}</span>
+                          <span className="flex items-center gap-1">
+                            <Clock className="w-3 h-3" />
+                            {alert.time}
+                          </span>
+                          <span>Reach: {alert.reach}</span>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-4 text-sm text-gray-600 mb-2">
-                      <span>Source: {alert.source}</span>
-                      <span className="flex items-center gap-1">
-                        <Clock className="w-3 h-3" />
-                        {alert.time}
-                      </span>
-                      <span>Reach: {alert.reach}</span>
+                    <div className="bg-blue-50 border border-blue-200 rounded p-3 ml-9">
+                      <div className="flex items-start gap-2">
+                        <span>🤖</span>
+                        <div>
+                          <p className="font-semibold text-blue-900 text-sm">AI Note</p>
+                          <p className="text-sm text-gray-700">{alert.aiNote}</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="bg-blue-50 border border-blue-200 rounded p-3 ml-9">
-                  <div className="flex items-start gap-2">
-                    <span>🤖</span>
-                    <div>
-                      <p className="font-semibold text-blue-900 text-sm">AI Note</p>
-                      <p className="text-sm text-gray-700">{alert.aiNote}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-            
-           
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </div>
+
         </div>
 
         <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-lg border border-blue-200 p-6">

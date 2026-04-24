@@ -38,17 +38,18 @@ export function createWordCloud(container, data) {
 
   // Set up multiple dark colors for words
   const colors = [
-    am4core.color("#2C3E50"),
-    am4core.color("#34495E"),
-    am4core.color("#1A252F"),
-    am4core.color("#2F4F4F"),
-    am4core.color("#483D8B"),
-    am4core.color("#2F1B8D"),
-    am4core.color("#1E3A8A"),
-    am4core.color("#1E293B"),
-    am4core.color("#18181B"),
-    am4core.color("#27272A")
+    am4core.color("#3B82F6"), // Blue
+    am4core.color("#10B981"), // Emerald
+    am4core.color("#F59E0B"), // Amber
+    am4core.color("#EF4444"), // Red
+    am4core.color("#8B5CF6"), // Violet
+    am4core.color("#EC4899"), // Pink
+    am4core.color("#06B6D4"), // Cyan
+    am4core.color("#F97316"), // Orange
+    am4core.color("#6366F1"), // Indigo
+    am4core.color("#84CC16")  // Lime
   ];
+
 
   // Apply colors to labels
   series.labels.template.adapter.add("fill", function(fill, target) {

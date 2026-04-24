@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { MessageSquare, TrendingUp, Radio, BarChart3, MessageCircle} from 'lucide-react';
+import { MessageSquare, TrendingUp, Radio, BarChart3, MessageCircle } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import { CrisisCard } from './CrisisCard';
 import { MetricWidget } from './MetricWidget';
@@ -32,12 +32,12 @@ export default function Dashboard() {
   ];
 
   const tabs = [
-  { id: "overview", label: "Pulse" , icon: MessageSquare },
-  { id: "response", label: "Crises Management", icon: MessageCircle },
-  { id: "media", label: "Social Intelligence",  icon: TrendingUp },
-  { id: "live", label: "Live Signals", icon: Radio },
-  { id: "trends", label: "Trends & Analytics", icon: BarChart3 },
-];
+    { id: "overview", label: "Pulse", icon: MessageSquare },
+    { id: "response", label: "Crises Management", icon: MessageCircle },
+    { id: "media", label: "Social Intelligence", icon: TrendingUp },
+    { id: "live", label: "Live Signals", icon: Radio },
+    { id: "trends", label: "Trends & Analytics", icon: BarChart3 },
+  ];
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -51,12 +51,12 @@ export default function Dashboard() {
                 <p className="text-blue-200 mt-1">From Signals to Decisions — Instantly</p>
               </div>
             </div>
-              <button
-                onClick={() => navigate('/works')}
-                className="text-blue-200 cursor-pointer hover:text-white transition-colors underline underline-offset-4"
-              >
-                How it works?
-              </button>
+            <button
+              onClick={() => navigate('/works')}
+              className="text-blue-200 cursor-pointer hover:text-white transition-colors underline underline-offset-4"
+            >
+              How it works?
+            </button>
           </div>
         </div>
       </header>
@@ -70,11 +70,10 @@ export default function Dashboard() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={` cursor-pointer flex items-center gap-2 px-4 py-3 border-b-2 transition-colors whitespace-nowrap ${
-                  activeTab === tab.id
+                className={` cursor-pointer flex items-center gap-2 px-4 py-3 border-b-2 transition-colors whitespace-nowrap ${activeTab === tab.id
                     ? 'border-[#1F3A5F] text-[#1F3A5F] font-semibold'
                     : 'border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300'
-                }`}
+                  }`}
               >
                 <tab.icon className="w-4 h-4" />
                 <span>{tab.label}</span>
@@ -108,6 +107,7 @@ export default function Dashboard() {
                 recommendation="Immediate response required. Prepare official statement and actively monitor media coverage."
                 assignedTo="Anna"
                 status="In Progress"
+                defaultCollapsed={false}
                 engagement="1.2K"
                 hashtags={["#cleanliness", "#foodsafety", "#brandreputation"]}
                 worldCloud={["cleanliness", "hygiene", "dirty", "food safety", "inspection", "violation", "complaint", "sanitation", "customer experience", "restaurant", "McDonalds", "Helsinki"]}
@@ -256,7 +256,7 @@ export default function Dashboard() {
         {activeTab === 'response' && <CrisesManagementTab />}
       </main>
 
-         <footer className="bg-white border-t border-gray-200">
+      <footer className="bg-white border-t border-gray-200">
         <div className="max-w-7xl mx-auto px-6 py-6">
           <div className="flex items-center gap-2">
             <p className="text-sm text-gray-600">
